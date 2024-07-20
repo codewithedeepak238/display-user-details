@@ -1,17 +1,16 @@
-import { useState } from 'react';
 import { useFetch } from '../hooks/useFetch'
 
 export const Detailpage = () => {
-  let index = sessionStorage.getItem("item_id");
-  let user = JSON.parse(sessionStorage.getItem("user")) || {};
-  let [userdata, setUser] = useState({});
+  let index = localStorage.getItem("item_id");
+  let user = JSON.parse(localStorage.getItem("user")) || {};
+  let userdata = {};
   if(user.index==index){
     loading = false;
-    setUser(user);
+    userdata = user;
   }else{
     var {list, loading} = useFetch("https://potterapi-fedeperin.vercel.app/en/characters", index);
-    setUser(list)
-    sessionStorage.setItem("user", JSON.stringify(list));
+    userdata = list;
+    localStorage.setItem("user", JSON.stringify(list));
   }
 
   return (
