@@ -1,15 +1,16 @@
+import { useState } from 'react';
 import { useFetch } from '../hooks/useFetch'
 
 export const Detailpage = () => {
   let index = sessionStorage.getItem("item_id");
   let user = JSON.parse(sessionStorage.getItem("user")) || {};
-  let userdata = {};
+  let [userdata, setUser] = useState({});
   if(user.index==index){
     loading = false;
-    userdata = user;
+    setUser(user);
   }else{
     var {list, loading} = useFetch("https://potterapi-fedeperin.vercel.app/en/characters", index);
-    userdata = list;
+    setUser(list)
     sessionStorage.setItem("user", JSON.stringify(list));
   }
 
